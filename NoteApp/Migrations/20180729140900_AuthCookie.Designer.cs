@@ -3,15 +3,17 @@ using System;
 using BusinessLogicLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace NoteApp.Migrations
 {
     [DbContext(typeof(NoteAppDbContext))]
-    partial class NoteAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180729140900_AuthCookie")]
+    partial class AuthCookie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
