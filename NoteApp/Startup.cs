@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +19,23 @@ namespace NoteApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {			
 	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=", builder => builder.MigrationsAssembly("NoteApp")));
 			services.AddScoped<RepositoryService>();
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+				options =>
+				{
+					options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+				});
+
 	        services.AddMvc();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+			
+
 			app.UseStaticFiles();
 
 	        app.UseAuthentication();
@@ -35,7 +44,7 @@ namespace NoteApp
 	        {
 		        routes.MapRoute(
 			        name: "default",
-			        template: "{controller=MainPage}/{action=Index}/{id?}");
+			        template: "{controller=Home}/{action=Index}/{id?}");
 	        });
 		}
     }

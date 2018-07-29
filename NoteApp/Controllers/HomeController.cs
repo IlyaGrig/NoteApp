@@ -1,25 +1,24 @@
 ﻿using BusinessLogicLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NoteApp.Controllers
 {
     public class HomeController : Controller
     {
+	    
+
+
 		RepositoryService _rep;
 	    public HomeController(RepositoryService rep)
 	    {
 		    _rep = rep;
 	    }
-	    [HttpGet]
+	    [Authorize]
+		[HttpGet]
 	    public ActionResult Index()
 	    {
 		    return View(_rep.GetNoteList());
-	    }
-
-	    [HttpGet]
-	    public ActionResult HiNoname()
-	    {
-		    return View();
 	    }
 
 	    [HttpPost]

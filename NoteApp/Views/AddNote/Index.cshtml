@@ -1,8 +1,9 @@
-﻿@*@inject UserManager<ApplicationUser> UserManager*@
-@*"@UserManager.GetUserId(User)" в вэлью где 12*@
+﻿@using DataAccessLayer
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
 <h1>Добавление заметки</h1>
 <form method="post" action="~/AddNote/AddNewNote">
-    <input type="hidden" value="12" name="userId" />
+    <input type="hidden" value=@UserManager.GetUserId(User) name="userId" />
     <label for="nameNote">Название заметки</label>
     <input type="text" name="nameNote" id="nameNote" /> <br /><br />
     <label for="headerNote">Описание заметки</label>

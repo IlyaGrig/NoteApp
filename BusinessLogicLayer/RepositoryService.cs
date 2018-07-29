@@ -15,7 +15,7 @@ namespace BusinessLogicLayer
 		    _db = db;
 	    }
 
-	    public IEnumerable<Note> GetNoteList()
+	    public List<Note> GetNoteList()
 	    {
 		    return _db.Notes.ToList();
 	    }

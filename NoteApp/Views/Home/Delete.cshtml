@@ -1,6 +1,7 @@
-﻿@using DataAccesLayer;
-@model List<Note>
-@inject UserManager<ApplicationUser> UserManager
+﻿@using DataAccessLayer
+@using Microsoft.AspNetCore.Identity
+@model List<DataAccessLayer.Note>
+@inject UserManager<User> UserManager
 <div>
     <h1>Главная страница</h1>
 </div>
