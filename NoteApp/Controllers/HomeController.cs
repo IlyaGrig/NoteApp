@@ -1,37 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BusinessLogicLayer;
 using Microsoft.AspNetCore.Mvc;
-using NoteApp.Models;
 
 namespace NoteApp.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+		RepositoryService _rep;
+	    public HomeController(RepositoryService rep)
+	    {
+		    _rep = rep;
+	    }
+	    [HttpGet]
+	    public ActionResult Index()
+	    {
+		    return View(_rep.GetNoteList());
+	    }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+	    [HttpGet]
+	    public ActionResult HiNoname()
+	    {
+		    return View();
+	    }
 
-            return View();
-        }
+	    [HttpPost]
+	    public ActionResult Search(string searchText)
+	    {
+		    return View(_rep.Search(searchText));
+	    }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
+	    [HttpPost]
+	    public ActionResult Update(int idNote)
+	    {
 
-            return View();
-        }
+		    return View(_rep.GetNote(idNote));
 
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+	    }
+
+	    [HttpPost]
+	    public ActionResult SaveUpdate(int idNote, string userId, string base64Icon, string nameNote, string headerNote, string textNote)
+	    {
+
+		    _rep.UpdateNote(idNote, nameNote, headerNote, textNote);
+		    return RedirectPermanent("~/MainPage");
+
+
+	    }
+
+	    [HttpPost]
+	    public ActionResult Delete(int idNote)
+	    {
+
+		    _rep.DeleteNote(idNote);
+		    return View(_rep.GetNoteList());
+
+	    }
+	}
 }

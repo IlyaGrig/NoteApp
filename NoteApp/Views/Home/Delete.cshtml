@@ -1,10 +1,12 @@
-﻿@using DataAccesLayer;;
+﻿@using DataAccesLayer;
 @model List<Note>
 @inject UserManager<ApplicationUser> UserManager
 <div>
-    <h1>Главная страница </h1>
+    <h1>Главная страница</h1>
 </div>
-@*<label>@UserManager.GetUserId(User)</label>*@
+<div>
+    <h1>Запись успешно удалена</h1>
+</div>
 <form method="post" action="~/MainPage/Search">
     <label for="nameNote">Поиск</label>
     <input type="text" name="searchText" id="searchText" /> <br /><br />
@@ -12,7 +14,7 @@
 </form>
 <table class="table">
     <thead>
-        <tr><th>IconId</th><th>Название заметки</th><th>Краткое описание</th><th>Дата добавления </th></tr>
+        <tr><th>IconId</th><th>Название заметки</th><th>Краткое описание</th><th>Дата добавления</th></tr>
     </thead>
     <tbody>
         @foreach (var note in Model)

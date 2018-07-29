@@ -1,0 +1,13 @@
+﻿@*@inject UserManager<ApplicationUser> UserManager*@
+@*"@UserManager.GetUserId(User)" в вэлью где 12*@
+<h1>Добавление заметки</h1>
+<form method="post" action="~/AddNote/AddNewNote">
+    <input type="hidden" value="12" name="userId" />
+    <label for="nameNote">Название заметки</label>
+    <input type="text" name="nameNote" id="nameNote" /> <br /><br />
+    <label for="headerNote">Описание заметки</label>
+    <input type="text" name="headerNote" id="headerNote" /> <br /><br />
+    <label for="textNote">Текст заметки</label>
+    <p><textarea cols="70" rows="8" type="text" name="textNote" id="textNote"></textarea></p>
+    <input type="submit" value="Сохранить" />
+</form>
