@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using BusinessLogicLayer;
+using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
@@ -16,9 +17,15 @@ namespace TestApp
 		        .Options;
 	        using (var context = new NoteAppDbContext(options))
 	        {
+		        context.Notes.Add(new Note("qw", "qwe", "zxc", "qwewr"));
+		        context.SaveChanges();
+				RepositoryService rep = new RepositoryService(context);
 		        var count = context.Notes.Count();
-				Assert.Equal(0,count);
-	        }
+		        var headerNote = rep.Search("qw").FirstOrDefault()?.HeaderNote;
+
+		        Assert.Equal(1,count);
+		        Assert.Equal("zxc",headerNote);
+			}
 		}
 	    [Fact]
 	    public void TestRepository()
@@ -28,8 +35,9 @@ namespace TestApp
 			    .Options;
 		    using (var context = new NoteAppDbContext(options))
 		    {
-
-		    }
+			    var count = context.Notes.Count();
+			    Assert.Equal(0, count);
+			}
 	    }
 	}
 }

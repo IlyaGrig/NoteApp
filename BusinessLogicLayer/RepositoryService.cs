@@ -45,10 +45,10 @@ namespace BusinessLogicLayer
 		    Note note = _db.Notes.First(e => e.NoteId == id);
 		    if (note != null)
 		    {
-			    _db.Notes.Remove(note);
+			    //_db.Notes.Remove(note);
 			    note.NoteName = name; note.HeaderNote = header; note.TextNote = text;
 			    note.DateNote = DateTime.Now;
-			    _db.Notes.Add(note);
+			    //_db.Notes.Add(note);
 		    }
 		    _db.SaveChanges();
 	    }
