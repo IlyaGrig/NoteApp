@@ -1,18 +1,15 @@
 ﻿@using DataAccessLayer
-@using Microsoft.AspNetCore.Identity
 @model Note
-@inject UserManager<User> UserManager
 <h1>Измениние заметки</h1>
-<form method="post" action="~/MainPage/SaveUpdate">
+<form method="post" asp-action="SaveUpdate">
     <input type="hidden" value="@Model.NoteId" name="idNote" />
     <input type="hidden" value="@Model.Base64Icon" name="base64Icon" />
-    <input type="hidden" value="@UserManager.GetUserId(User)" name="userId" />
+    <input type="hidden" value="@User.FindFirst("Id").Value" name="userId" />
     <label for="nameNote">Название заметки</label>
     <input type="text" name="nameNote" id="nameNote" value="@Model.NoteName" /> <br /><br />
     <label for="headerNote">Описание заметки</label>
     <input type="text" name="headerNote" id="headerNote" value="@Model.HeaderNote" /> <br /><br />
     <label for="textNote">Текст заметки</label><br /><br />
-    @*<input size="100" type="text" name="textNote" id="textNote" value="@Model.TextNote" /> <br /><br />*@
     <p><textarea cols="70" rows="8" type="text" name="textNote" id="textNote">@Model.TextNote</textarea></p>
     <input type="submit" value="Изменить\Вернуться на главную" />
 </form>

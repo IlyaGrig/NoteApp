@@ -1,15 +1,14 @@
 ﻿@using DataAccessLayer
 @using Microsoft.AspNetCore.Identity
-@model List<DataAccessLayer.Note>
-@inject UserManager<User> UserManager
+@model List<Note>
 <div>
     <h1>Главная страница</h1>
 </div>
 <div>
     <h1>Запись успешно удалена</h1>
 </div>
-<form method="post" action="~/MainPage/Search">
-    <label for="nameNote">Поиск</label>
+<form method="post" asp-action="Search">
+    <label>Поиск</label>
     <input type="text" name="searchText" id="searchText" /> <br /><br />
     <input type="submit" value="Искать" />
 </form>
@@ -20,22 +19,21 @@
     <tbody>
         @foreach (var note in Model)
         {
-            if (note.UserId == UserManager.GetUserId(User))
+            if (note.UserId == User.FindFirst("Id").Value)
             {
                 <tr>
                     <td><img width="50" height="50" src="data:image/svg+xml;base64,@note.Base64Icon" /></td>
-                    @*<td>@note.UserId</td>*@
                     <td>@note.NoteName</td>
                     <td>@note.HeaderNote</td>
                     <td>@note.DateNote</td>
                     <td>
-                        <form method="post" action="~/MainPage/Update">
+                        <form method="post" asp-action="Update">
                             <input type="hidden" value="@note.NoteId" name="idNote" />
                             <input type="submit" value="Просмотр" />
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="~/MainPage/Delete">
+                        <form method="post" asp-action="Delete">
                             <input type="hidden" value="@note.NoteId" name="idNote" />
                             <input type="submit" value="Удалить" />
                         </form>

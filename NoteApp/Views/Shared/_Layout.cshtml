@@ -31,9 +31,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @*<li><a asp-area="" asp-controller="MainPage" asp-action="Index">MainPage</a></li>*@
                     <li><a asp-area="" asp-controller="AddNote" asp-action="Index">AddNote</a></li>
                 </ul>
+                @User.Identity.Name
             </div>
         </div>
     </nav>

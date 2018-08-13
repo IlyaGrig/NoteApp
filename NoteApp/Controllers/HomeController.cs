@@ -40,7 +40,7 @@ namespace NoteApp.Controllers
 	    {
 
 		    _rep.UpdateNote(idNote, nameNote, headerNote, textNote);
-		    return RedirectPermanent("~/MainPage");
+		    return RedirectPermanent("~/Home");
 
 
 	    }

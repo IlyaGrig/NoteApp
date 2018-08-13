@@ -1,7 +1,8 @@
 ﻿using BusinessLogicLayer;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using DataAccessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ namespace NoteApp
         {			
 	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=", builder => builder.MigrationsAssembly("NoteApp")));
 			services.AddScoped<RepositoryService>();
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+			services.AddAuthentication().AddCookie(
 				options =>
 				{
 					options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
