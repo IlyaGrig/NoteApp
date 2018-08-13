@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp", "NoteApp\NoteApp.csproj", "{C93A75DD-5B94-480E-9A08-E1E31C5EF7AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconService", "IconService\IconService.csproj", "{0925B87D-4500-465B-AEC0-4AC214B89872}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IconService", "IconService\IconService.csproj", "{0925B87D-4500-465B-AEC0-4AC214B89872}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{E5150BDB-763E-4751-8755-F91716BE2498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{E5150BDB-763E-4751-8755-F91716BE2498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{6C8B3E0A-787F-4B75-980D-3E1C151A8446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{6C8B3E0A-787F-4B75-980D-3E1C151A8446}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{ED998F35-5794-49ED-89CF-7024403A38F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6C8B3E0A-787F-4B75-980D-3E1C151A8446}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C8B3E0A-787F-4B75-980D-3E1C151A8446}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C8B3E0A-787F-4B75-980D-3E1C151A8446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED998F35-5794-49ED-89CF-7024403A38F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED998F35-5794-49ED-89CF-7024403A38F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED998F35-5794-49ED-89CF-7024403A38F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED998F35-5794-49ED-89CF-7024403A38F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

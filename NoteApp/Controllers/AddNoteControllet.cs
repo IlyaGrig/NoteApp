@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogicLayer;
+﻿using BusinessLogicLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NoteApp.Controllers
 {
+	[Authorize]
 	public class AddNoteController : Controller
 	{
 		readonly RepositoryService _rep;
@@ -22,15 +20,11 @@ namespace NoteApp.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult AddNewNote(string userId, string nameNote, string headerNote, string textNote)
+		public ActionResult AddNewNote(string nameNote, string headerNote, string textNote)
 		{
-			//NotesDbContext context = new NotesDbContext();
-			//context.Notes.Add(new Note(userId, nameNote, headerNote, textNote));
-			//context.SaveChanges();
+			_rep.AddNote(nameNote, headerNote, textNote, User.FindFirst("Id").Value);
 
-			_rep.AddNote(nameNote, headerNote, textNote, userId);
-
-			return RedirectPermanent("~/MainPage");
+			return RedirectPermanent("~/Home");
 
 		}
 	}
