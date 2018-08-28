@@ -2,17 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using IconService;
+using BusinessLogicLayer.Interfaces;
 
 namespace BusinessLogicLayer
 {
-    public class RepositoryService
-    {
-	    private readonly NoteAppDbContext _db;
+    public class NotesService : Interfaces.INotesService
+	{
+		private readonly NoteAppDbContext _db;
+		private readonly IconHelper _iconService;
 
-	    public RepositoryService (NoteAppDbContext db)
+	    public NotesService(NoteAppDbContext db,IconHelper iconService)
 	    {
 		    _db = db;
+		    _iconService = iconService;
 	    }
 
 	    public List<Note> GetNoteList()
@@ -28,21 +32,20 @@ namespace BusinessLogicLayer
 		    _db.SaveChanges();
 	    }
 
-	    public void AddNote(string name, string header, string text, string userId)
+	    public async void AddNoteAsync(string name, string header, string text, string userId)
 	    {
 			var newNote = new Note(userId, name, header, text)
 			{
 				DateNote = DateTime.Now,
-				Base64Icon = IconBase64.GetIcon()
+				Base64Icon = await _iconService.GetIconAsync()
 			};
 			_db.Notes.Add(newNote);
 		    _db.SaveChanges();
-
 	    }
 
 	    public void UpdateNote(int id, string name, string header, string text)
 	    {
-		    Note note = _db.Notes.First(e => e.NoteId == id);
+		    var note = _db.Notes.First(e => e.NoteId == id);
 		    if (note != null)
 		    {
 			    //_db.Notes.Remove(note);
@@ -63,11 +66,6 @@ namespace BusinessLogicLayer
 	    {
 		    var note = _db.Notes.First(e => e.NoteId == id);
 		    return note ?? null;
-	    }
-
-	    public void Dispose()
-	    {
-		    _db.Dispose();
 	    }
 	}
 }
