@@ -9,8 +9,8 @@ namespace NoteApp.Controllers
 	    
 
 
-		RepositoryService _rep;
-	    public HomeController(RepositoryService rep)
+		NotesService _rep;
+	    public HomeController(NotesService rep)
 	    {
 		    _rep = rep;
 	    }
