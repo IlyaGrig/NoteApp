@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer;
+using BusinessLogicLayer.Interfaces;
 using Helpers;
 using IconService;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,10 +25,10 @@ namespace NoteApp
         public void ConfigureServices(IServiceCollection services)
         {			
 	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=", builder => builder.MigrationsAssembly("NoteApp")));
-			services.AddScoped<NotesService>();
+			services.AddScoped<INotesService,NotesService>();
 	        services.AddScoped<IconHelper>();
 	        services.AddScoped<ExcelHelper>();
-	        services.AddScoped<DIConfigurator>(services);
+	        services.AddScoped<DIConfigurator>();
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
 				options =>
 				{

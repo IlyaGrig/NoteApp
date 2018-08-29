@@ -8,6 +8,11 @@
     <input type="text" name="searchText" id="searchText" /> <br /><br />
     <input type="submit" value="Искать" />
 </form>
+<form method="post" asp-controller="Home" asp-action="GetExcel">
+    <label>Поиск</label>
+    <input type="file"  name="@Model" id="@Model" /> <br /><br />
+    <input type="submit" value="Искать" />
+</form>
 <table class="table">
     <thead>
         <tr><th>IconId</th><th>Название заметки</th><th>Краткое описание</th><th>Дата добавления </th></tr>

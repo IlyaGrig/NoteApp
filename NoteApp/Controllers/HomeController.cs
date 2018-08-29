@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿using System.Collections.Generic;
+using BusinessLogicLayer;
+using BusinessLogicLayer.VIewModel;
+using DataAccessLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,13 +9,14 @@ namespace NoteApp.Controllers
 {
     public class HomeController : Controller
     {
-	    
 
+		private readonly NotesService _rep;
+	    private readonly GetExcelWithNotes _xlHelper;
 
-		NotesService _rep;
-	    public HomeController(NotesService rep)
+		public HomeController(NotesService rep, GetExcelWithNotes xlHelper)
 	    {
-		    _rep = rep;
+			_rep = rep;
+		    _xlHelper = xlHelper;
 	    }
 	    [Authorize]
 		[HttpGet]
@@ -45,13 +49,18 @@ namespace NoteApp.Controllers
 
 	    }
 
+		[HttpPost]
+		public ActionResult Delete(int idNote)
+		{
+
+			_rep.DeleteNote(idNote);
+			return View(_rep.GetNoteList());
+
+		}
 	    [HttpPost]
-	    public ActionResult Delete(int idNote)
+	    public ActionResult GetExcel(List<Note> notes)
 	    {
-
-		    _rep.DeleteNote(idNote);
-		    return View(_rep.GetNoteList());
-
+		    return _xlHelper.GetExcelFile(notes);
 	    }
 	}
 }

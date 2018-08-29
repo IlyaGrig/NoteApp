@@ -8,7 +8,7 @@ using BusinessLogicLayer.Interfaces;
 
 namespace BusinessLogicLayer
 {
-    public class NotesService : Interfaces.INotesService
+    public class NotesService : INotesService
 	{
 		private readonly NoteAppDbContext _db;
 		private readonly IconHelper _iconService;
@@ -48,10 +48,9 @@ namespace BusinessLogicLayer
 		    var note = _db.Notes.First(e => e.NoteId == id);
 		    if (note != null)
 		    {
-			    //_db.Notes.Remove(note);
 			    note.NoteName = name; note.HeaderNote = header; note.TextNote = text;
 			    note.DateNote = DateTime.Now;
-			    //_db.Notes.Add(note);
+
 		    }
 		    _db.SaveChanges();
 	    }
