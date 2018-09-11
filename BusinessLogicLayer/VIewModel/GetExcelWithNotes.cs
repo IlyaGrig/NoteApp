@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace BusinessLogicLayer.VIewModel
     public class GetExcelWithNotes
     {
 	    private ExcelHelper _excelHelper;
-	    public GetExcelWithNotes(ExcelHelper excelHelper)
+	    public GetExcelWithNotes()
 	    {
-		    _excelHelper = excelHelper;
+		    _excelHelper = null;
 	    }
 
 	    public FileContentResult GetExcelFile(IEnumerable<Note> notes)
@@ -23,7 +24,7 @@ namespace BusinessLogicLayer.VIewModel
 			_excelHelper = new ExcelHelper(headers.Count,headers);
 		    foreach (var note in notes)
 		    {
-				List<string> row = new List<string>(){note.NoteId.ToString(),note.UserId,note.NoteName,note.HeaderNote,note.TextNote,note.DateNote.ToString()};
+				List<string> row = new List<string>(){note.NoteId.ToString(),note.UserId,note.NoteName,note.HeaderNote,note.TextNote,note.DateNote.ToString(CultureInfo.InvariantCulture)};
 			    _excelHelper.AddNewRow(row);				
 		    }
 			

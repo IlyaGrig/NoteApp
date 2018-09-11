@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using BusinessLogicLayer;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +9,10 @@ namespace NoteApp.Controllers
 	[Authorize]
 	public class NotesController : Controller
 	{
-		readonly INotesService _rep;
+		readonly NotesService
+			_rep;
 
-		public NotesController(INotesService rep)
+		public NotesController(NotesService rep)
 		{
 			_rep = rep;
 		}

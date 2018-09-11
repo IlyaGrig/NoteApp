@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using BusinessLogicLayer;
 using DataAccessLayer;
-using IconService;
+using Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

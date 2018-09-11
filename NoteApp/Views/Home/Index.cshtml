@@ -8,10 +8,9 @@
     <input type="text" name="searchText" id="searchText" /> <br /><br />
     <input type="submit" value="Искать" />
 </form>
-<form method="post" asp-controller="Home" asp-action="GetExcel">
-    <label>Поиск</label>
-    <input type="file"  name="@Model" id="@Model" /> <br /><br />
-    <input type="submit" value="Искать" />
+<form method="post" asp-controller="Home" asp-action="GetExcel" >
+    <label>Вернуть Excel файл</label>
+    <input type="submit" value="Вернуть"  />
 </form>
 <table class="table">
     <thead>

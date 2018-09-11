@@ -2,9 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using IconService;
 using BusinessLogicLayer.Interfaces;
+using Helpers;
 
 namespace BusinessLogicLayer
 {
@@ -64,7 +63,7 @@ namespace BusinessLogicLayer
 	    public Note GetNote(int id)
 	    {
 		    var note = _db.Notes.First(e => e.NoteId == id);
-		    return note ?? null;
+		    return note;
 	    }
 	}
 }
