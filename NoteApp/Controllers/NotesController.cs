@@ -1,4 +1,5 @@
 ﻿
+using System.Threading.Tasks;
 using BusinessLogicLayer;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -9,25 +10,26 @@ namespace NoteApp.Controllers
 	[Authorize]
 	public class NotesController : Controller
 	{
-		readonly NotesService
-			_rep;
+		readonly NotesService _rep;
 
 		public NotesController(NotesService rep)
 		{
 			_rep = rep;
 		}
 
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
-			return View();
+			return await Task.Run(() => View());
 		}
 
 		[HttpPost]
-		public ActionResult AddNewNote(string nameNote, string headerNote, string textNote)
+		public async Task<ActionResult> AddNewNote(string nameNote, string headerNote, string textNote)
 		{
-			_rep.AddNoteAsync(nameNote, headerNote, textNote, User.FindFirst("Id").Value);
-
-			return RedirectPermanent("~/Home");
+			return await Task.Run(async () =>
+			{
+				await _rep.AddNote(nameNote, headerNote, textNote, User.FindFirst("Id").Value);
+				return RedirectPermanent("~/Home");
+			});
 
 		}
 	}

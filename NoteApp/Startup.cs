@@ -24,7 +24,7 @@ namespace NoteApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {			
-	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=", builder => builder.MigrationsAssembly("NoteApp")));
+	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=348275723", builder => builder.MigrationsAssembly("NoteApp")));
 			services.AddScoped<NotesService>();
 	        services.AddScoped<IconHelper>();
 	        services.AddScoped<GetExcelWithNotes>();
