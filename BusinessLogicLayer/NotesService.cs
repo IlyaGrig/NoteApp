@@ -15,11 +15,11 @@ namespace BusinessLogicLayer
 		private readonly IconHelper _iconService;
 		private readonly CancellationToken _cancellationToken;
 
-		public NotesService(NoteAppDbContext db, IconHelper iconService, CancellationToken cancellationToken)
+		public NotesService(NoteAppDbContext db, IconHelper iconService, CancellationTokenSource cancellationToken)
 		{
 			_db = db;
 			_iconService = iconService;
-			_cancellationToken = cancellationToken;
+			_cancellationToken = cancellationToken.Token;
 		}
 
 		public async Task<List<Note>> GetNoteList()
