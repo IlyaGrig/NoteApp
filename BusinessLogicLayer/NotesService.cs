@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Interfaces;
 using Helpers;
@@ -12,16 +13,18 @@ namespace BusinessLogicLayer
 	{
 		private readonly NoteAppDbContext _db;
 		private readonly IconHelper _iconService;
+		private readonly CancellationToken _cancellationToken;
 
-		public NotesService(NoteAppDbContext db, IconHelper iconService)
+		public NotesService(NoteAppDbContext db, IconHelper iconService, CancellationToken cancellationToken)
 		{
 			_db = db;
 			_iconService = iconService;
+			_cancellationToken = cancellationToken;
 		}
 
 		public async Task<List<Note>> GetNoteList()
 		{
-			return await Task.Run(() => _db.Notes.ToList());
+			return await Task.Run(() => _db.Notes.ToList(), _cancellationToken);
 		}
 
 		public async Task DeleteNote(int id)
@@ -31,8 +34,8 @@ namespace BusinessLogicLayer
 				 var note = _db.Notes.First(e => e.NoteId == id);
 				 if (note != null)
 					 _db.Notes.Remove(note);
-				 _db.SaveChanges();
-			 });
+				 _db.SaveChangesAsync(_cancellationToken);
+			 }, _cancellationToken);
 		}
 
 		public async Task AddNote(string name, string header, string text, string userId)
@@ -61,7 +64,7 @@ namespace BusinessLogicLayer
 				}
 
 				_db.SaveChanges();
-			});
+			}, _cancellationToken);
 		}
 
 		public async Task<IEnumerable<Note>> Search(string searchingText)
@@ -71,7 +74,7 @@ namespace BusinessLogicLayer
 				var
 					search = new Search(_db.Notes.ToList(), searchingText);
 				return search.GetNotesFound();
-			});
+			}, _cancellationToken);
 		}
 
 		public async Task<Note> GetNote(int id)
@@ -80,7 +83,7 @@ namespace BusinessLogicLayer
 			{
 				var note = _db.Notes.First(e => e.NoteId == id);
 				return note;
-			});
+			}, _cancellationToken);
 		}
 	}
 }

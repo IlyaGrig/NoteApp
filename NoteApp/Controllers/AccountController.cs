@@ -12,10 +12,10 @@ namespace NoteApp.Controllers
 {
 	public class AccountController : Controller
 	{
-		private NoteAppDbContext db;
+		private readonly NoteAppDbContext _db;
 		public AccountController(NoteAppDbContext context)
 		{
-			db = context;
+			_db = context;
 		}
 		[HttpGet]
 		public IActionResult Login()
@@ -28,7 +28,7 @@ namespace NoteApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+				User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
 				if (user != null)
 				{
 					await Authenticate(user.Email,user.Id); // аутентификация
@@ -50,13 +50,13 @@ namespace NoteApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+				User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 				if (user == null)
 				{
 					// добавляем пользователя в бд
 					User newUser = new User() {Email = model.Email, Password = model.Password};
-					db.Users.Add(newUser);
-					await db.SaveChangesAsync();
+					_db.Users.Add(newUser);
+					await _db.SaveChangesAsync();
 
 					await Authenticate(newUser.Email,newUser.Id); // аутентификация
 

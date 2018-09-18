@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using BusinessLogicLayer;
 using BusinessLogicLayer.VIewModel;
 using DataAccessLayer;
-using Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,8 +19,7 @@ namespace NoteApp.Controllers
 			_rep = rep;
 			_xlHelper = xlHelper;
 
-
-		}
+	    }
 	    [Authorize]
 		[HttpGet]
 	    public async Task<ActionResult> Index()
@@ -52,7 +50,7 @@ namespace NoteApp.Controllers
 		public async Task<ActionResult> Delete(int idNote)
 		{
 			await _rep.DeleteNote(idNote);
-			List<Note> x = await _rep.GetNoteList();
+			var x = await _rep.GetNoteList();
 			return View(x);
 		}
 	    [HttpPost]
