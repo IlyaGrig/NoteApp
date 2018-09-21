@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogicLayer;
+using BusinessLogicLayer.Interfaces;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,10 +13,10 @@ namespace NoteApp.Controllers
 {
 	public class AccountController : Controller
 	{
-		private readonly NoteAppDbContext _db;
-		public AccountController(NoteAppDbContext context)
+		private readonly IAuthService _authServise;
+		public AccountController(IAuthService authServise)
 		{
-			_db = context;
+			_authServise = authServise;
 		}
 		[HttpGet]
 		public IActionResult Login()
@@ -28,10 +29,11 @@ namespace NoteApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-				if (user != null)
+				
+				if ((_authServise.UserCheck(model)).Result)
 				{
-					await Authenticate(user.Email,user.Id); // аутентификация
+					var user = (_authServise.GetUser(model)).Result;
+					await Authenticate(user.Email, user.Id); // аутентификация
 
 					return RedirectToAction("Index", "Home");
 				}
@@ -50,15 +52,13 @@ namespace NoteApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-				if (user == null)
+				if (!(_authServise.UserCheck(model)).Result)
 				{
 					// добавляем пользователя в бд
-					User newUser = new User() {Email = model.Email, Password = model.Password};
-					_db.Users.Add(newUser);
-					await _db.SaveChangesAsync();
 
-					await Authenticate(newUser.Email,newUser.Id); // аутентификация
+					await _authServise.SetUser(model);
+					var user = _authServise.GetUser(model).Result;
+					await Authenticate(user.Email,user.Id); // аутентификация
 
 					return RedirectToAction("Index", "Home");
 				}

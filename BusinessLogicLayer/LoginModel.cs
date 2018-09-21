@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BusinessLogicLayer.VIewModel;
 
 namespace BusinessLogicLayer
 {
-	public class LoginModel
+	public class LoginModel : IUserModel
 	{
 		[Required(ErrorMessage = "Не указан Email")]
 		public string Email { get; set; }

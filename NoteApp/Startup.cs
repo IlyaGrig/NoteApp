@@ -37,7 +37,8 @@ namespace NoteApp
 					accessor.HttpContext.RequestAborted);
 			});
 			services.AddScoped<NotesService>();
-	        services.AddScoped<IconHelper>();
+	        services.AddScoped<IAuthService,AccountService>();
+			services.AddScoped<IconHelper>();
 	        services.AddScoped<GetExcelWithNotes>();
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
 				options =>
