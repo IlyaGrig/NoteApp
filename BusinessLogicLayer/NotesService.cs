@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Interfaces;
 using Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogicLayer
 {
@@ -24,18 +25,16 @@ namespace BusinessLogicLayer
 
 		public async Task<List<Note>> GetNoteList()
 		{
-			return await Task.Run(() => _db.Notes.ToList(), _cancellationToken);
+			return  await _db.Notes.ToListAsync(_cancellationToken);
 		}
 
 		public async Task DeleteNote(int id)
 		{
-			await Task.Run(() =>
-			 {
-				 var note = _db.Notes.First(e => e.NoteId == id);
-				 if (note != null)
-					 _db.Notes.Remove(note);
-				 _db.SaveChangesAsync(_cancellationToken);
-			 }, _cancellationToken);
+
+			var note = _db.Notes.First(e => e.NoteId == id);
+			if (note != null)
+				_db.Notes.Remove(note);
+			await _db.SaveChangesAsync(_cancellationToken);
 		}
 
 		public async Task AddNote(string name, string header, string text, string userId)
@@ -45,45 +44,41 @@ namespace BusinessLogicLayer
 				DateNote = DateTime.Now,
 				Base64Icon = await _iconService.GetIconAsync()
 			};
-			_db.Notes.Add(newNote);
-			_db.SaveChanges();
+			await _db.Notes.AddAsync(newNote, _cancellationToken);
+			await _db.SaveChangesAsync(_cancellationToken);
 		}
 
 		public async Task UpdateNote(int id, string name, string header, string text)
 		{
-			await Task.Run(() =>
+
+			var note = _db.Notes.First(e => e.NoteId == id);
+			if (note != null)
 			{
-				var note = _db.Notes.First(e => e.NoteId == id);
-				if (note != null)
-				{
-					note.NoteName = name;
-					note.HeaderNote = header;
-					note.TextNote = text;
-					note.DateNote = DateTime.Now;
+				note.NoteName = name;
+				note.HeaderNote = header;
+				note.TextNote = text;
+				note.DateNote = DateTime.Now;
 
-				}
+			}
 
-				_db.SaveChanges();
-			}, _cancellationToken);
+			await _db.SaveChangesAsync(_cancellationToken);
+
 		}
 
-		public async Task<IEnumerable<Note>> Search(string searchingText)
+		public Task<IEnumerable<Note>> Search(string searchingText)
 		{
-			return await Task.Run(() =>
-			{
-				var
-					search = new Search(_db.Notes.ToList(), searchingText);
-				return search.GetNotesFound();
-			}, _cancellationToken);
+
+			var search = new Search(_db.Notes.ToListAsync(_cancellationToken), searchingText);
+			return search.GetNotesFound();
+
 		}
 
 		public async Task<Note> GetNote(int id)
 		{
-			return await Task.Run(() =>
-			{
-				var note = _db.Notes.First(e => e.NoteId == id);
+			
+				var note = await _db.Notes.FirstAsync(e => e.NoteId == id, _cancellationToken);
 				return note;
-			}, _cancellationToken);
+		
 		}
 	}
 }

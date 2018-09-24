@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLayer;
+using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.VIewModel;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +12,10 @@ namespace NoteApp.Controllers
     public class HomeController : Controller
     {
 
-		private readonly NotesService _rep;
+		private readonly INotesService _rep;
 		private readonly GetExcelWithNotes _xlHelper;
 
-		public HomeController(NotesService rep, GetExcelWithNotes xlHelper)
+		public HomeController(INotesService rep, GetExcelWithNotes xlHelper)
 	    {
 			_rep = rep;
 			_xlHelper = xlHelper;
@@ -50,8 +51,7 @@ namespace NoteApp.Controllers
 		public async Task<ActionResult> Delete(int idNote)
 		{
 			await _rep.DeleteNote(idNote);
-			var x = await _rep.GetNoteList();
-			return View(x);
+			return View(await _rep.GetNoteList());
 		}
 	    [HttpPost]
 	    public async Task<FileContentResult> GetExcel(List<Note> notes)

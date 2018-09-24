@@ -14,6 +14,5 @@ namespace BusinessLogicLayer.Interfaces
 	    Task UpdateNote(int id, string name, string header, string text);
 	    Task<IEnumerable<Note>> Search(string searchingText);
 	    Task<Note> GetNote(int id);
-
     }
 }

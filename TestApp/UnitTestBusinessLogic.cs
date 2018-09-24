@@ -20,7 +20,7 @@ namespace TestApp
 				var iconHelper = scope.ServiceProvider.GetService<IconHelper>();
 				var context = scope.ServiceProvider.GetService<NoteAppDbContext>();
 				var cancellationToken = scope.ServiceProvider.GetService<CancellationTokenSource>();
-				var rep = new NotesService(context, iconHelper, cancellationToken);
+				var rep = scope.ServiceProvider.GetService<NotesService>();
 				var options = new DbContextOptionsBuilder<NoteAppDbContext>()
 					.UseInMemoryDatabase(databaseName: "Add_writes_to_database")
 					.Options;

@@ -27,18 +27,15 @@ namespace NoteApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid) return View(model);
+			if ((_authServise.UserCheck(model)).Result)
 			{
-				
-				if ((_authServise.UserCheck(model)).Result)
-				{
-					var user = (_authServise.GetUser(model)).Result;
-					await Authenticate(user.Email, user.Id); // аутентификация
+				var user = (_authServise.GetUser(model)).Result;
+				await Authenticate(user.Email, user.Id); // аутентификация
 
-					return RedirectToAction("Index", "Home");
-				}
-				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+				return RedirectToAction("Index", "Home");
 			}
+			ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			return View(model);
 		}
 		[HttpGet]
@@ -50,21 +47,19 @@ namespace NoteApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid) return View(model);
+			if (!(_authServise.UserCheck(model)).Result)
 			{
-				if (!(_authServise.UserCheck(model)).Result)
-				{
-					// добавляем пользователя в бд
+				// добавляем пользователя в бд
 
-					await _authServise.SetUser(model);
-					var user = _authServise.GetUser(model).Result;
-					await Authenticate(user.Email,user.Id); // аутентификация
+				await _authServise.SetUser(model);
+				var user = _authServise.GetUser(model).Result;
+				await Authenticate(user.Email,user.Id); // аутентификация
 
-					return RedirectToAction("Index", "Home");
-				}
-				else
-					ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+				return RedirectToAction("Index", "Home");
 			}
+			else
+				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			return View(model);
 		}
 

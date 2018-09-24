@@ -13,7 +13,5 @@ namespace BusinessLogicLayer.Interfaces
 	    Task<User> GetUser(IUserModel model);
 	    Task SetUser(IUserModel model);
 
-
-
     }
 }
