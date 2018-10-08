@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.VIewModel;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp.Controllers
 {

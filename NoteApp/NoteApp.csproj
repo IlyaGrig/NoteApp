@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
-    <ProjectReference Include="..\TestApp\TestApp.csproj" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Home\" />
+    <ProjectReference Include="..\BusinessLogicLayer\NoteApp.BusinessLogicLayer.csproj" />
+    <ProjectReference Include="..\TestApp\NoteApp.TestApp.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

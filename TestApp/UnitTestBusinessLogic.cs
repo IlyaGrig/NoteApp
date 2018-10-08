@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading;
 using BusinessLogicLayer;
@@ -6,9 +5,10 @@ using DataAccessLayer;
 using Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using TestApp;
 using Xunit;
 
-namespace TestApp
+namespace NoteApp.TestApp
 {
 	public class UnitTestBusinessLogic
 	{
@@ -27,18 +27,15 @@ namespace TestApp
 
 
 
-				context.Notes.Add(new Note("qw", "qwe", "zxc", "qwewr"));
+				context.Notes.Add(new Note("123", "Home", "Pay", "pay the bills"));
 				context.SaveChanges();
 
 
-
-
-
 				var count = context.Notes.Count();
-				var headerNote = rep.Search("qw").Result.FirstOrDefault()?.HeaderNote;
+				var headerNote = rep.Search("Home").Result.FirstOrDefault()?.HeaderNote;
 
 				Assert.Equal(1, count);
-				Assert.Equal("zxc", headerNote);
+				Assert.Equal("Pay", headerNote);
 
 			}
 		}

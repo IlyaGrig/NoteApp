@@ -1,21 +1,21 @@
 ﻿
 using System.Threading;
 using System.Threading.Tasks;
-using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
+using NoteApp.BusinessLogicLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp.Controllers
 {
 	[Authorize]
 	public class NotesController : Controller
 	{
-		private readonly NotesService _rep;
-		private readonly CancellationToken _cancellationToken;
+		private readonly INotesService _rep;
+		private readonly CancellationTokenSource _cancellationToken;
 
 
-		public NotesController(NotesService rep, CancellationToken cancellationToken)
+		public NotesController(INotesService rep, CancellationTokenSource cancellationToken)
 		{
 			_rep = rep;
 			_cancellationToken = cancellationToken;

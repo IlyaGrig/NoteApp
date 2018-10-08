@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using BusinessLogicLayer.Interfaces;
 using Helpers;
 using Microsoft.EntityFrameworkCore;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace BusinessLogicLayer
 {

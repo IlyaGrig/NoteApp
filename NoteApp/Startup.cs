@@ -1,8 +1,4 @@
 ﻿using System.Threading;
-using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.VIewModel;
-using Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TestApp;
+using BusinessLogicLayer;
+using BusinessLogicLayer.VIewModel;
+using Helpers;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp
 {
@@ -62,7 +61,7 @@ namespace NoteApp
 			{
 				routes.MapRoute(
 				 name: "default",
-				 template: "{controller=Home}/{action=Index}/{id?}");
+				 template: "{controller=Home}/{action=Index}");
 			});
 		}
     }

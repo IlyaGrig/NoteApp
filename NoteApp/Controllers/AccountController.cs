@@ -2,12 +2,12 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp.Controllers
 {
@@ -72,7 +72,7 @@ namespace NoteApp.Controllers
 				new Claim("Id", userId.ToString())
 			};
 			// создаем объект ClaimsIdentity
-			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+			var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 			// установка аутентификационных куки
 			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
 		}

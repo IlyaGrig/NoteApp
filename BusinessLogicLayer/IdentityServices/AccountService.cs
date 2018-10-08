@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.VIewModel;
+﻿using System.Threading.Tasks;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace BusinessLogicLayer
 {
 	public class AccountService : IAuthService
 	{
-		readonly NoteAppDbContext _db;
+		private readonly NoteAppDbContext _db;
 
 		public AccountService(NoteAppDbContext context)
 		{

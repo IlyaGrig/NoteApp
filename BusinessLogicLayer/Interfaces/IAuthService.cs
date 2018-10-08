@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogicLayer.VIewModel;
+﻿using System.Threading.Tasks;
 using DataAccessLayer;
 
-namespace BusinessLogicLayer.Interfaces
+namespace NoteApp.BusinessLogicLayer.Interfaces
 {
     public interface IAuthService
     {

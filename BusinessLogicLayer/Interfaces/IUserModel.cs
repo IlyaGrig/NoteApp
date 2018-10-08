@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BusinessLogicLayer.VIewModel
+﻿namespace NoteApp.BusinessLogicLayer.Interfaces
 {
 	public interface IUserModel
 	{
