@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DataAccessLayer;
 
 namespace BusinessLogicLayer
@@ -8,16 +9,16 @@ namespace BusinessLogicLayer
 	{
 		public IEnumerable<Note> InListNote { get; set; }
 		public string SearchText { get; set; }
-		public Search(IEnumerable<Note> inListNote, string searchText)
+		public Search(Task<List<Note>> inListNote, string searchText)
 		{
-			InListNote = inListNote;
+			InListNote = inListNote.Result;
 			SearchText = searchText ?? "";
 		}
 
-		public IEnumerable<Note> GetNotesFound()
+		public Task<IEnumerable<Note>> GetNotesFound()
 		{
-			return InListNote.Where(e => e.HeaderNote.Contains(SearchText) ||
-			                             e.NoteName.Contains(SearchText));
+			return Task.Run( () => InListNote.Where(e => e.HeaderNote.Contains(SearchText) ||
+										 e.NoteName.Contains(SearchText)));
 		}
 	}
 }

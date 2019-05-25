@@ -1,14 +1,15 @@
-﻿using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.VIewModel;
-using Helpers;
+﻿using System.Threading;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TestApp;
+using BusinessLogicLayer;
+using BusinessLogicLayer.VIewModel;
+using Helpers;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp
 {
@@ -23,10 +24,19 @@ namespace NoteApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {			
-	        services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=NoteAppV1;Username=postgres;Password=root", builder => builder.MigrationsAssembly("NoteApp")));
-			services.AddScoped<NotesService>();
-	        services.AddScoped<IconHelper>();
+        {
+			services.AddDbContext<NoteAppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), builder => builder.MigrationsAssembly("NoteApp")));
+			services.AddScoped(a =>
+			{
+				var accessor = a.GetService<IHttpContextAccessor>();
+				if (accessor.HttpContext == null)
+					return new CancellationTokenSource();
+				return CancellationTokenSource.CreateLinkedTokenSource(
+					accessor.HttpContext.RequestAborted);
+			});
+			services.AddScoped<INotesService,NotesService>();
+	        services.AddScoped<IAuthService,AccountService>();
+			services.AddScoped<IconHelper>();
 	        services.AddScoped<GetExcelWithNotes>();
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
 				options =>
@@ -35,6 +45,7 @@ namespace NoteApp
 				});
 
 	        services.AddMvc();
+
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,12 +57,12 @@ namespace NoteApp
 
 	        app.UseAuthentication();
 
-	        app.UseMvc(routes =>
-	        {
-		        routes.MapRoute(
-			        name: "default",
-			        template: "{controller=Home}/{action=Index}/{id?}");
-	        });
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+				 name: "default",
+				 template: "{controller=Home}/{action=Index}");
+			});
 		}
     }
 }

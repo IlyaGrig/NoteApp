@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp.Controllers
 {
 	public class AccountController : Controller
 	{
-		private NoteAppDbContext db;
-		public AccountController(NoteAppDbContext context)
+		private readonly IAuthService _authServise;
+		public AccountController(IAuthService authServise)
 		{
-			db = context;
+			_authServise = authServise;
 		}
 		[HttpGet]
 		public IActionResult Login()
@@ -26,17 +27,15 @@ namespace NoteApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid) return View(model);
+			if ((_authServise.UserCheck(model)).Result)
 			{
-				User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-				if (user != null)
-				{
-					await Authenticate(user.Email,user.Id); // аутентификация
+				var user = (_authServise.GetUser(model)).Result;
+				await Authenticate(user.Email, user.Id); // аутентификация
 
-					return RedirectToAction("Index", "Home");
-				}
-				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+				return RedirectToAction("Index", "Home");
 			}
+			ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			return View(model);
 		}
 		[HttpGet]
@@ -48,23 +47,19 @@ namespace NoteApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid) return View(model);
+			if (!(_authServise.UserCheck(model)).Result)
 			{
-				User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-				if (user == null)
-				{
-					// добавляем пользователя в бд
-					User newUser = new User() {Email = model.Email, Password = model.Password};
-					db.Users.Add(newUser);
-					await db.SaveChangesAsync();
+				// добавляем пользователя в бд
 
-					await Authenticate(newUser.Email,newUser.Id); // аутентификация
+				await _authServise.SetUser(model);
+				var user = _authServise.GetUser(model).Result;
+				await Authenticate(user.Email,user.Id); // аутентификация
 
-					return RedirectToAction("Index", "Home");
-				}
-				else
-					ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+				return RedirectToAction("Index", "Home");
 			}
+			else
+				ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 			return View(model);
 		}
 
@@ -77,7 +72,7 @@ namespace NoteApp.Controllers
 				new Claim("Id", userId.ToString())
 			};
 			// создаем объект ClaimsIdentity
-			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+			var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 			// установка аутентификационных куки
 			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
 		}

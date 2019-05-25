@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using DataAccessLayer;
 
-namespace BusinessLogicLayer.Interfaces
+namespace NoteApp.BusinessLogicLayer.Interfaces
 {
 	public interface INotesService
     {
-	    List<Note> GetNoteList();
-	    void DeleteNote(int id);
-	    void AddNoteAsync(string name, string header, string text, string userId);
-	    void UpdateNote(int id, string name, string header, string text);
-	    IEnumerable<Note> Search(string searchingText);
-	    Note GetNote(int id);
-
+	    Task<List<Note>> GetNoteList();
+	    Task DeleteNote(int id);
+	    Task AddNote(string name, string header, string text, string userId);
+	    Task UpdateNote(int id, string name, string header, string text);
+	    Task<IEnumerable<Note>> Search(string searchingText);
+	    Task<Note> GetNote(int id);
     }
 }

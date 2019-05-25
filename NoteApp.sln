@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp", "NoteApp\NoteApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "IconService\Helpers.csproj", "{0925B87D-4500-465B-AEC0-4AC214B89872}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{E5150BDB-763E-4751-8755-F91716BE2498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp.DataAccessLayer", "DataAccessLayer\NoteApp.DataAccessLayer.csproj", "{E5150BDB-763E-4751-8755-F91716BE2498}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{6C8B3E0A-787F-4B75-980D-3E1C151A8446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp.BusinessLogicLayer", "BusinessLogicLayer\NoteApp.BusinessLogicLayer.csproj", "{6C8B3E0A-787F-4B75-980D-3E1C151A8446}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{ED998F35-5794-49ED-89CF-7024403A38F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp.TestApp", "TestApp\NoteApp.TestApp.csproj", "{ED998F35-5794-49ED-89CF-7024403A38F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

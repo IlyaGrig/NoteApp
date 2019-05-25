@@ -1,20 +1,24 @@
 ﻿
-using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
+using System.Threading;
+using System.Threading.Tasks;
+using NoteApp.BusinessLogicLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp.Controllers
 {
 	[Authorize]
 	public class NotesController : Controller
 	{
-		readonly NotesService
-			_rep;
+		private readonly INotesService _rep;
+		private readonly CancellationTokenSource _cancellationToken;
 
-		public NotesController(NotesService rep)
+
+		public NotesController(INotesService rep, CancellationTokenSource cancellationToken)
 		{
 			_rep = rep;
+			_cancellationToken = cancellationToken;
 		}
 
 		public ActionResult Index()
@@ -23,12 +27,10 @@ namespace NoteApp.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult AddNewNote(string nameNote, string headerNote, string textNote)
+		public async Task<ActionResult> AddNewNote(string nameNote, string headerNote, string textNote)
 		{
-			_rep.AddNoteAsync(nameNote, headerNote, textNote, User.FindFirst("Id").Value);
-
+			await _rep.AddNote(nameNote, headerNote, textNote, User.FindFirst("Id").Value);
 			return RedirectPermanent("~/Home");
-
 		}
 	}
 }
