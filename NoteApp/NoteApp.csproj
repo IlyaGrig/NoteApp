@@ -19,11 +19,4 @@
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BusinessLogicLayer\NoteApp.BusinessLogicLayer.csproj" />
-    <ProjectReference Include="..\TestApp\NoteApp.TestApp.csproj" />
-  </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
-
 </Project>
