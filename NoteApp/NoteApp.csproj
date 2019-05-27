@@ -19,4 +19,8 @@
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogicLayer\NoteApp.BusinessLogicLayer.csproj" />
+  </ItemGroup>
+
 </Project>

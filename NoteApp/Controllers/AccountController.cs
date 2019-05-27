@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogicLayer;
+using NoteApp.BusinessLogicLayer;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

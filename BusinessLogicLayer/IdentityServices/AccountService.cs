@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using BusinessLogicLayer;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using NoteApp.BusinessLogicLayer.Interfaces;
 
-namespace BusinessLogicLayer
+namespace NoteApp.BusinessLogicLayer
 {
 	public class AccountService : IAuthService
 	{

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BusinessLogicLayer;
 using BusinessLogicLayer.VIewModel;
 using Helpers;
+using NoteApp.BusinessLogicLayer;
 using NoteApp.BusinessLogicLayer.Interfaces;
 
 namespace NoteApp

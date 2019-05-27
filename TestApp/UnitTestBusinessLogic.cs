@@ -36,7 +36,6 @@ namespace NoteApp.TestApp
 
 				Assert.Equal(1, count);
 				Assert.Equal("Pay", headerNote);
-
 			}
 		}
 
